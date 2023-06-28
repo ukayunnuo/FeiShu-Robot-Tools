@@ -19,6 +19,10 @@ public class FeiShuRobotSignUtil {
 
     public static String HMACSHA256_STR = "HmacSHA256";
 
+    public static String genSignForMillisecond(String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException {
+        return genSign(secret, timestamp / 1000);
+    }
+
     public static String genSign(String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException {
         String stringToSign = timestamp + "\n" + secret;
         Mac mac = Mac.getInstance(HMACSHA256_STR);

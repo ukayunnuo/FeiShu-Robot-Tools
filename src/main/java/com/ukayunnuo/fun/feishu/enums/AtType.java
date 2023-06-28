@@ -16,7 +16,7 @@ public enum AtType {
     /**
      * 单用户
      */
-    Single_user,
+    SINGLE_USER,
 
     /**
      * 所有人

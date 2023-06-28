@@ -3,10 +3,7 @@ package com.ukayunnuo.fun.feishu.project.msgtype;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.ukayunnuo.fun.feishu.project.base.RichTextContentDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
  * @author ukayunnuo
  * @since 1.0.0
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class RichTextMsgType {
