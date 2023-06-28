@@ -21,6 +21,5 @@ public enum AtType {
     /**
      * 所有人
      */
-    ALL,
-    ;
+    ALL;
 }
