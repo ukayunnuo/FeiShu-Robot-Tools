@@ -90,3 +90,7 @@ public class TestFeiShuRobotSendMsgUtil {
 
 ![image](https://github.com/ukayunnuo/FeiShu-Robot-Tools/blob/master/image/img_5.png)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ukayunnuo/FeiShu-Robot-Tools&type=Date)](https://star-history.com/#ukayunnuo/FeiShu-Robot-Tools&Date)
+
