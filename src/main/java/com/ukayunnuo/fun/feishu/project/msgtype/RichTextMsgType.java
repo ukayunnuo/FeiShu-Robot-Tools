@@ -2,10 +2,12 @@ package com.ukayunnuo.fun.feishu.project.msgtype;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONType;
 import com.ukayunnuo.fun.feishu.project.base.RichTextContentDto;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 飞书机器人 富文本 类型
@@ -40,19 +42,23 @@ public class RichTextMsgType {
         }
 
         public RichTextPostDTO(RichTextPostDto zhCn, RichTextPostDto enUs) {
-            this.zhCn = zhCn;
-            this.enUs = enUs;
+            if (Objects.nonNull(zhCn)){
+                this.zhCn = zhCn;
+            }
+            if (Objects.nonNull(enUs)){
+                this.enUs = enUs;
+            }
         }
 
         @Getter
         @Setter
         @AllArgsConstructor
+        @JSONType(orders = {"title","content"})
         public static class RichTextPostDto {
 
             private String title;
 
-            @JSONField(name = "content")
-            private List<RichTextContentDto> content;
+            private List<List<RichTextContentDto>> content;
 
         }
 

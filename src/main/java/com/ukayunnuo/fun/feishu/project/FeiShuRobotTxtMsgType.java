@@ -22,7 +22,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@JSONType(orders = {"timestamp","sign","msgType","content"})
+@JSONType(orders = {"timestamp","sign","msg_type","content"})
 public class FeiShuRobotTxtMsgType<T> {
 
     /**
