@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>com.ukayunnuo</groupId>
-    <artifactId>Good-Tools</artifactId>
+    <artifactId>FeiShu-Robot-Tools</artifactId>
     <version>1.0.0</version>
 
-    <name>Good-Tools</name>
-    <description>Good-Tools</description>
+    <name>FeiShu-Robot-Tools</name>
+    <description>飞书机器人工具类</description>
     <properties>
         <java.version>1.8</java.version>
         <slf4j.version>2.0.7</slf4j.version>
