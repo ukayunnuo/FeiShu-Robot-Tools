@@ -42,9 +42,9 @@ public class TestFeiShuRobotSendMsgUtil {
     @Before
     public void init() {
         // 设置 机器人的webhook地址
-        url = "https://open.feishu.cn/open-apis/bot/v2/hook/f5e5ab96-7577-4c0d-b4a7-e06e690693ed";
+        url = "机器人的webhook地址";
         // 设置 机器人的验签密钥, 如何机器人没有开启验签设置则不用设置
-        secret = "VOdxlw77f9S8Un3vSSz7j";
+        secret = "机器人的验签密钥";
     }
 
     /**
