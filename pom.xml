@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>com.ukayunnuo</groupId>
-    <artifactId>Good-Tools</artifactId>
+    <artifactId>FeiShu-Robot-Tools</artifactId>
     <version>1.0.0</version>
 
-    <name>Good-Tools</name>
-    <description>Good-Tools</description>
+    <name>FeiShu-Robot-Tools</name>
+    <description>飞书机器人工具类</description>
     <properties>
         <java.version>1.8</java.version>
         <slf4j.version>2.0.7</slf4j.version>
@@ -39,6 +39,7 @@
             <version>${hutool.version}</version>
         </dependency>
 
+        <!-- slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -48,6 +49,27 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+
+        <!-- fastjson2 -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.34</version>
+        </dependency>
+
+        <!-- commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
