@@ -20,6 +20,10 @@
 
 ![image](https://github.com/ukayunnuo/FeiShu-Robot-Tools/blob/master/image/img_4.png)
 
+- 发送卡片消息： 支持自定义卡片消息，支持配置卡片消息模板
+  
+![image](https://github.com/ukayunnuo/FeiShu-Robot-Tools/blob/master/image/img_6.png)
+
 ## 官方飞书机器人使用指南
 自定义飞书机器人使用指南：https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot#f62e72d5
 
