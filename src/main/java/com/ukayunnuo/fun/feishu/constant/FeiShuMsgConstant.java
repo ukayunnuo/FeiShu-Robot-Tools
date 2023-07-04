@@ -18,4 +18,9 @@ public class FeiShuMsgConstant {
      */
     public static String AT_ALL_USER = "<at user_id=\"all\">所有人</at>";
 
+    /**
+     * 卡片 @ 所有人格式
+     */
+    public static String CARD_AT_ALL_USER = "<at id=all></at>";
+
 }

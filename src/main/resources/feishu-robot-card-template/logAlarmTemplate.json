@@ -1,0 +1,94 @@
+{
+  "config": {
+    "wide_screen_mode": true
+  },
+  "header": {
+    "template": "red",
+    "title": {
+      "tag": "plain_text",
+      "content": "【日志告警通知】${service_name}-服务日志报错警告"
+    }
+  },
+  "elements": [
+    {
+      "fields": [
+        {
+          "is_short": true,
+          "text": {
+            "content": "**故障时间**\n${time}",
+            "tag": "lark_md"
+          }
+        },
+        {
+          "is_short": true,
+          "text": {
+            "content": "**服务**\n${service_name}",
+            "tag": "lark_md"
+          }
+        }
+      ],
+      "tag": "div"
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**责任人: **${user_name}",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**Path URL**\n[${path_url}]({url})",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**CLASS:** ${class}",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**Method:** ${method}",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**ErrorMsg:** ${error_msg}",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "**<font color='red'>stack</font>**\n${error_stack}",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "tag": "hr"
+    },
+    {
+      "tag": "div",
+      "text": {
+        "content": "<at id=all></at>",
+        "tag": "lark_md"
+      }
+    },
+    {
+      "elements": [
+        {
+          "content": "[来自日志告警紧急通知]",
+          "tag": "lark_md"
+        }
+      ],
+      "tag": "note"
+    }
+  ]
+}

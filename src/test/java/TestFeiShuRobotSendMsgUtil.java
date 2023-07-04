@@ -1,14 +1,19 @@
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpResponse;
+import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.fun.feishu.constant.FeiShuMsgConstant;
 import com.ukayunnuo.fun.feishu.project.base.RichTextContentDto;
+import com.ukayunnuo.fun.feishu.util.CardTemplateUtil;
 import com.ukayunnuo.fun.feishu.util.FeiShuRobotSendMsgUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 飞书机器人 发送消息测试类
@@ -96,4 +101,29 @@ public class TestFeiShuRobotSendMsgUtil {
         }
     }
 
+    /**
+     * 测试发送日志告警卡片消息
+     * 消息卡片搭建工具：https://open.feishu.cn/tool/cardbuilder?templateId=ctp_AA6lZXnd9iKm
+     */
+    @Test
+    public void testSendCardMsg2() {
+
+        Map<String, String> map = new HashMap<>(8);
+        map.put("service_name", "用户服务");
+        map.put("user_name", "yunnuo");
+        map.put("time", DateUtil.today());
+        map.put("path_url", "/feishu/ukayunnuo/demo");
+        map.put("url", "https://feishu/ukayunnuo/demo");
+        map.put("class", this.getClass().getCanonicalName());
+        map.put("method", "POST");
+        map.put("error_msg", "error_test");
+        map.put("error_stack", "error_stack");
+
+        JSONObject content = CardTemplateUtil.get("logAlarmTemplate", JSONObject.class, map);
+        try (HttpResponse httpResponse = FeiShuRobotSendMsgUtil.sendCardMsg(url, content, secret)) {
+        } catch (Exception e) {
+            log.error("发送失败 e：{}", e.getMessage(), e);
+        }
+
+    }
 }

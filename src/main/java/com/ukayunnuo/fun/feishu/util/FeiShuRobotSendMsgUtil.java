@@ -3,6 +3,7 @@ package com.ukayunnuo.fun.feishu.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -22,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,31 +35,31 @@ import java.util.Objects;
 @Slf4j
 public class FeiShuRobotSendMsgUtil {
 
-    public static HttpResponse sendTextMsg(String url, String content) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendTextMsg(String url, String content) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendTextMsg(url, content, Boolean.FALSE, null, null, AtType.NONE, null, null);
     }
 
-    public static HttpResponse sendAtSingleUserTextMsg(String url, String content, String userId) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendAtSingleUserTextMsg(String url, String content, String userId) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendAtSingleUserTextMsg(url, content, userId, null);
     }
 
-    public static HttpResponse sendAtSingleUserTextMsg(String url, String content, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendAtSingleUserTextMsg(String url, String content, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendTextMsg(url, content, Boolean.FALSE, null, null, AtType.SINGLE_USER, userId, userName);
     }
 
-    public static HttpResponse sendSecretTextMsg(String url, String content, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendSecretTextMsg(String url, String content, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendSecretTextMsg(url, content, secret, DateUtil.date().getTime());
     }
 
-    public static HttpResponse sendSecretTextMsg(String url, String content, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendSecretTextMsg(String url, String content, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendTextMsg(url, content, Boolean.TRUE, secret, timestamp, AtType.NONE, null, null);
     }
 
-    public static HttpResponse sendAtSingleUserSecretTextMsg(String url, String content, String secret, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendAtSingleUserSecretTextMsg(String url, String content, String secret, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendTextMsg(url, content, Boolean.TRUE, secret, DateUtil.date().getTime(), AtType.SINGLE_USER, userId, userName);
     }
 
-    public static HttpResponse sendTextMsg(String url, String content, String secret, Long timestamp, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendTextMsg(String url, String content, String secret, Long timestamp, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendTextMsg(url, content, Boolean.TRUE, secret, timestamp, AtType.SINGLE_USER, userId, userName);
     }
 
@@ -76,9 +78,8 @@ public class FeiShuRobotSendMsgUtil {
      * @throws NoSuchAlgorithmException 算法异常
      * @throws InvalidKeyException      无效key异常
      * @throws InstantiationException   实例化异常
-     * @throws IllegalAccessException   非法访问异常
      */
-    public static HttpResponse sendTextMsg(String url, String content, Boolean secretFlag, String secret, Long timestamp, AtType atType, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendTextMsg(String url, String content, Boolean secretFlag, String secret, Long timestamp, AtType atType, String userId, String userName) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
 
         if (Boolean.FALSE.equals(StrUtil.isAllNotBlank(url, content))) {
             throw new IllegalArgumentException("Illegal parameter!");
@@ -97,39 +98,39 @@ public class FeiShuRobotSendMsgUtil {
     }
 
 
-    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, null, enUsTitle, null, enUsContents);
     }
 
-    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendEnUsRichTextMsg(url, enUsTitle, enUsContents, secret, DateUtil.date().getTime());
     }
 
-    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendEnUsRichTextMsg(String url, String enUsTitle, List<List<RichTextContentDto>> enUsContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, null, enUsTitle, null, enUsContents, secret, timestamp);
     }
 
-    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, zhCnTitle, null, zhCnContents, null);
     }
 
-    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendZhCnRichTextMsg(url, zhCnTitle, zhCnContents, secret, DateUtil.date().getTime());
     }
 
-    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendZhCnRichTextMsg(String url, String zhCnTitle, List<List<RichTextContentDto>> zhCnContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, zhCnTitle, null, zhCnContents, null, secret, timestamp);
     }
 
-    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, zhCnTitle, enUsTitle, zhCnContents, enUsContents, Boolean.FALSE, null, null);
     }
 
-    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, zhCnTitle, enUsTitle, zhCnContents, enUsContents, secret, DateUtil.date().getTime());
     }
 
-    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendRichTextMsg(url, zhCnTitle, enUsTitle, zhCnContents, enUsContents, Boolean.TRUE, secret, timestamp);
     }
 
@@ -151,7 +152,7 @@ public class FeiShuRobotSendMsgUtil {
      * @throws InstantiationException   实例化异常
      * @throws IllegalAccessException   非法访问异常
      */
-    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendRichTextMsg(String url, String zhCnTitle, String enUsTitle, List<List<RichTextContentDto>> zhCnContents, List<List<RichTextContentDto>> enUsContents, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
 
         if (StrUtil.isBlank(url)) {
             throw new IllegalArgumentException("Illegal parameter!");
@@ -186,15 +187,15 @@ public class FeiShuRobotSendMsgUtil {
         return sendPost(url, reqBody);
     }
 
-    public static HttpResponse sendShareChatMsg(String url, String shareChatId) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendShareChatMsg(String url, String shareChatId) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendShareChatMsg(url, shareChatId, Boolean.FALSE, null, null);
     }
 
-    public static HttpResponse sendShareChatMsg(String url, String shareChatId, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendShareChatMsg(String url, String shareChatId, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendShareChatMsg(url, shareChatId,  secret, DateUtil.date().getTime());
     }
 
-        public static HttpResponse sendShareChatMsg(String url, String shareChatId, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+        public static HttpResponse sendShareChatMsg(String url, String shareChatId, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendShareChatMsg(url, shareChatId, Boolean.TRUE, secret, timestamp);
     }
 
@@ -213,7 +214,7 @@ public class FeiShuRobotSendMsgUtil {
      * @throws InstantiationException   实例化异常
      * @throws IllegalAccessException   非法访问异常
      */
-    public static HttpResponse sendShareChatMsg(String url, String shareChatId, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendShareChatMsg(String url, String shareChatId, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
 
         if (Boolean.FALSE.equals(StrUtil.isAllNotBlank(url, shareChatId))){
             throw new IllegalArgumentException("Illegal parameter!");
@@ -227,15 +228,15 @@ public class FeiShuRobotSendMsgUtil {
         return sendPost(url, reqBody);
     }
 
-    public static HttpResponse sendImagMsg(String url, String imageKey) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendImagMsg(String url, String imageKey) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendImagMsg(url, imageKey, Boolean.FALSE, null, null);
     }
 
-    public static HttpResponse sendImagMsg(String url, String imageKey, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendImagMsg(String url, String imageKey, String secret) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
         return sendImagMsg(url, imageKey, secret, DateUtil.date().getTime());
     }
 
-    public static HttpResponse sendImagMsg(String url, String imageKey, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendImagMsg(String url, String imageKey, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
      return sendImagMsg(url, imageKey, Boolean.TRUE, secret, timestamp);
     }
 
@@ -254,7 +255,7 @@ public class FeiShuRobotSendMsgUtil {
      * @throws InstantiationException   实例化异常
      * @throws IllegalAccessException   非法访问异常
      */
-    public static HttpResponse sendImagMsg(String url, String imageKey, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException, IllegalAccessException {
+    public static HttpResponse sendImagMsg(String url, String imageKey, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException, InstantiationException {
 
         if (Boolean.FALSE.equals(StrUtil.isAllNotBlank(url, imageKey))){
             throw new IllegalArgumentException("Illegal parameter!");
@@ -266,6 +267,64 @@ public class FeiShuRobotSendMsgUtil {
 
         reqBody.setContent(new ImageType(imageKey));
         return sendPost(url, reqBody);
+    }
+
+
+    public static <T> HttpResponse sendCardMsg(String url, T content) throws NoSuchAlgorithmException, InvalidKeyException {
+        return sendCardMsg(url, content, Boolean.FALSE, null, null);
+    }
+
+    public static <T> HttpResponse sendCardMsg(String url, T content, String secret) throws NoSuchAlgorithmException, InvalidKeyException {
+        return sendCardMsg(url, content, secret, DateUtil.date().getTime());
+    }
+
+    public static <T> HttpResponse sendCardMsg(String url, T content, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException {
+
+        return sendCardMsg(url, content, Boolean.TRUE, secret, timestamp);
+
+    }
+
+    /**
+     * 发送卡片消息
+     *
+     * @param url        url
+     * @param content    内容
+     * @param secretFlag  加密flag true=加密，false=不加密
+     * @param secret      密钥
+     * @param timestamp   时间戳（单位：ms）
+     * @return {@link HttpResponse}
+     * @throws NoSuchAlgorithmException 没有这样算法异常
+     * @throws InvalidKeyException      无效key异常
+     */
+    public static <T> HttpResponse sendCardMsg(String url, T content, Boolean secretFlag, String secret, Long timestamp) throws NoSuchAlgorithmException, InvalidKeyException {
+
+        secret = FeiShuRobotSignUtil.genSign(secretFlag, secret, timestamp);
+
+        JSONObject jsonObject = JSONObject.of();
+        jsonObject.put("msg_type", RootMsgType.interactive);
+        if (secretFlag){
+            if (Objects.nonNull(timestamp)) {
+                jsonObject.put("timestamp", timestamp / 1000);
+            }
+            if (StringUtils.isNotBlank(secret)) {
+                jsonObject.put("sign", secret);
+            }
+        }
+        jsonObject.put("card", content);
+        return sendPost(url, jsonObject);
+
+    }
+
+
+    /**
+     * 发送消息
+     *
+     * @param url     url
+     * @param content 内容
+     * @return {@link HttpResponse}
+     */
+    public static HttpResponse sendMsg(String url, Map<String, Objects> content){
+        return sendPost(url, content);
     }
 
 
@@ -328,11 +387,10 @@ public class FeiShuRobotSendMsgUtil {
      * @param clazz     clazz
      * @return {@link FeiShuRobotTxtMsgType}<{@link T}>
      * @throws InstantiationException 实例化异常
-     * @throws IllegalAccessException 非法访问异常
      */
-    public static <T> FeiShuRobotTxtMsgType<T> assembleMsgType(Long timestamp, String secret, Class<T> clazz) throws InstantiationException, IllegalAccessException {
+    public static <T> FeiShuRobotTxtMsgType<T> assembleMsgType(Long timestamp, String secret, Class<T> clazz) throws InstantiationException {
 
-        T instance = clazz.newInstance();
+        T instance = ReflectUtil.newInstance(clazz);
         if (instance instanceof TextMsgType) {
             return new FeiShuRobotTxtMsgType<>(RootMsgType.text, timestamp, secret);
         }
@@ -345,7 +403,6 @@ public class FeiShuRobotSendMsgUtil {
         if (instance instanceof ShareChatType) {
             return new FeiShuRobotTxtMsgType<>(RootMsgType.share_chat, timestamp, secret);
         }
-
         throw new InstantiationException("param clazz is Illegal Instantiation!");
     }
 
