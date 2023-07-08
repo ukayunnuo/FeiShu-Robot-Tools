@@ -124,6 +124,5 @@ public class TestFeiShuRobotSendMsgUtil {
         } catch (Exception e) {
             log.error("发送失败 e：{}", e.getMessage(), e);
         }
-
     }
 }
