@@ -18,7 +18,7 @@
     <properties>
         <java.version>1.8</java.version>
         <slf4j.version>2.0.7</slf4j.version>
-        <hutool.version>5.8.3</hutool.version>
+        <hutool.version>5.8.20</hutool.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
